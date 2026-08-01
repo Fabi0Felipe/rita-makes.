@@ -10,14 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as NovidadesRouteImport } from './routes/novidades'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as PromocoesRouteImport } from './routes/promocoes'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ProdutoIdRouteImport } from './routes/produto.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NovidadesRoute = NovidadesRouteImport.update({
@@ -35,6 +53,11 @@ const PromocoesRoute = PromocoesRouteImport.update({
   path: '/promocoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ProdutoIdRoute = ProdutoIdRouteImport.update({
   id: '/produto/$id',
   path: '/produto/$id',
@@ -43,42 +66,75 @@ const ProdutoIdRoute = ProdutoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
   '/promocoes': typeof PromocoesRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/produto/$id': typeof ProdutoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
   '/promocoes': typeof PromocoesRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/produto/$id': typeof ProdutoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
   '/promocoes': typeof PromocoesRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/produto/$id': typeof ProdutoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/novidades' | '/produtos' | '/promocoes' | '/produto/$id'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/novidades' | '/produtos' | '/promocoes' | '/produto/$id'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/auth'
+    | '/contato'
     | '/novidades'
     | '/produtos'
     | '/promocoes'
+    | '/admin'
+    | '/produto/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/novidades'
+    | '/produtos'
+    | '/promocoes'
+    | '/admin'
+    | '/produto/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/contato'
+    | '/novidades'
+    | '/produtos'
+    | '/promocoes'
+    | '/_authenticated/admin'
     | '/produto/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ContatoRoute: typeof ContatoRoute
   NovidadesRoute: typeof NovidadesRoute
   ProdutosRoute: typeof ProdutosRoute
   PromocoesRoute: typeof PromocoesRoute
@@ -92,6 +148,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/novidades': {
@@ -115,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PromocoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/produto/$id': {
       id: '/produto/$id'
       path: '/produto/$id'
@@ -125,8 +209,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ContatoRoute: ContatoRoute,
   NovidadesRoute: NovidadesRoute,
   ProdutosRoute: ProdutosRoute,
   PromocoesRoute: PromocoesRoute,
