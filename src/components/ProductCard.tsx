@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { ShoppingBag } from "lucide-react";
 
+import { AddToCartButton } from "./AddToCartButton";
+
+
 import {
   discountPercent,
   finalPrice,
@@ -67,15 +70,19 @@ export function ProductCard({
           )}
         </div>
 
-        <a
-          href={whatsappLink(settings.whatsapp, productMessage(product, settings.store_name))}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-4 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-        >
-          <ShoppingBag className="size-4" />
-          Comprar
-        </a>
+        <div className="mt-4 flex flex-col gap-2">
+          <AddToCartButton product={product} />
+          <a
+            href={whatsappLink(settings.whatsapp, productMessage(product, settings.store_name))}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary px-4 py-2 text-xs font-medium text-primary transition hover:bg-secondary"
+          >
+            <ShoppingBag className="size-3.5" />
+            Comprar pelo WhatsApp
+          </a>
+        </div>
+
       </div>
     </article>
   );

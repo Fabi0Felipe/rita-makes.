@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as NovidadesRouteImport } from './routes/novidades'
 import { Route as ProdutosRouteImport } from './routes/produtos'
@@ -31,6 +32,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarrinhoRoute = CarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -67,6 +73,7 @@ const ProdutoIdRoute = ProdutoIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/contato': typeof ContatoRoute
   '/novidades': typeof NovidadesRoute
   '/produtos': typeof ProdutosRoute
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/carrinho'
     | '/contato'
     | '/novidades'
     | '/produtos'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/carrinho'
     | '/contato'
     | '/novidades'
     | '/produtos'
@@ -122,6 +133,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/carrinho'
     | '/contato'
     | '/novidades'
     | '/produtos'
@@ -134,6 +146,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CarrinhoRoute: typeof CarrinhoRoute
   ContatoRoute: typeof ContatoRoute
   NovidadesRoute: typeof NovidadesRoute
   ProdutosRoute: typeof ProdutosRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/carrinho': {
+      id: '/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof CarrinhoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  CarrinhoRoute: CarrinhoRoute,
   ContatoRoute: ContatoRoute,
   NovidadesRoute: NovidadesRoute,
   ProdutosRoute: ProdutosRoute,
