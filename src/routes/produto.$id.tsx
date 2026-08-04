@@ -2,7 +2,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check, Instagram, ShieldCheck, ShoppingBag, Truck } from "lucide-react";
 
+import { AddToCartButton } from "@/components/AddToCartButton";
 import { ProductCard } from "@/components/ProductCard";
+
 import { SiteShell } from "@/components/SiteShell";
 import { catalogQueryOptions } from "@/lib/catalog-query";
 import {
@@ -122,24 +124,28 @@ function ProductPage() {
               {product.stock > 0 ? `${product.stock} em estoque` : "Sob encomenda"}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={whatsappLink(settings.whatsapp, productMessage(product, settings.store_name))}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground shadow-soft transition hover:opacity-90"
-              >
-                <ShoppingBag className="size-4" /> Comprar pelo WhatsApp
-              </a>
-              <a
-                href={`https://instagram.com/${settings.instagram}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-primary px-6 py-4 text-sm font-medium text-primary transition hover:bg-secondary"
-              >
-                <Instagram className="size-4" /> Instagram
-              </a>
+            <div className="mt-8 space-y-3">
+              <AddToCartButton product={product} size="lg" />
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={whatsappLink(settings.whatsapp, productMessage(product, settings.store_name))}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-primary px-6 py-4 text-sm font-medium text-primary transition hover:bg-secondary"
+                >
+                  <ShoppingBag className="size-4" /> Comprar pelo WhatsApp
+                </a>
+                <a
+                  href={`https://instagram.com/${settings.instagram}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-4 text-sm font-medium text-primary transition hover:bg-secondary"
+                >
+                  <Instagram className="size-4" /> Instagram
+                </a>
+              </div>
             </div>
+
 
             <ul className="mt-8 grid gap-3 text-sm text-muted-foreground">
               {[
