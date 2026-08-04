@@ -85,7 +85,7 @@ function CartPage() {
         <h1 className="font-display text-4xl text-wine sm:text-5xl">Seu carrinho</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {hydrated
-            ? `${totalItems} ${totalItems === 1 ? "item" : "itens"} selecionados`
+            ? `${totalItems} ${totalItems === 1 ? "item selecionado" : "itens selecionados"}`
             : "Carregando seus itens..."}
         </p>
 
