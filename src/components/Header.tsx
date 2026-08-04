@@ -2,6 +2,8 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Instagram, Menu, Search, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 
+import { CartButton } from "./CartButton";
+
 const NAV = [
   { to: "/", label: "Início" },
   { to: "/produtos", label: "Produtos" },
@@ -69,11 +71,13 @@ export function Header({ instagram }: { instagram: string }) {
           <Instagram className="size-4" />
         </a>
 
+        <CartButton className="ml-auto md:ml-0" />
+
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-label="Abrir menu"
-          className="ml-auto grid size-10 place-items-center rounded-full border border-border text-primary lg:hidden"
+          className="grid size-10 place-items-center rounded-full border border-border text-primary lg:hidden"
         >
           {open ? <X className="size-4" /> : <Menu className="size-4" />}
         </button>
